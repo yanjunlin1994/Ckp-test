@@ -1,0 +1,14 @@
+<div class="post_new_message_block">
+  <p> Wanna post new images? </p>
+  <form enctype="multipart/form-data" action="/myblog/post-new-massage-home" method="post">
+    {% for messagefield in messageform %}
+        {{messagefield}}
+    {% endfor %}
+    <br>
+    <input type="submit">
+    {% csrf_token %}
+  </form>
+  {% for error in messageform.non_field_errors %}
+    <span>{{error}}</span>
+  {% endfor %}
+</div>

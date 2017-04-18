@@ -1,0 +1,20 @@
+.profile_block {
+  margin: 50px;
+  padding: 20px;
+  background-color:rgb(240,240,260);
+}
+.post_new_message_block {
+  margin-top: 80px;
+  background-color:rgb(240,240,260);
+ }
+ .my_profile_photo {
+  width: 60px;
+ }
+ .message_block_all {
+  margin: 50px;
+  padding: 20px;
+  background-color:rgb(240,240,260);
+ }
+ .message_block_image {
+  width: 300px;
+ }

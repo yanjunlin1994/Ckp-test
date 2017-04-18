@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'myblog',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
+# Used by the authentication system for the myblog application.
+# URL to use if the authentication system requires a user to log in.
+LOGIN_URL = '/myblog/login'
+
+# Default URL to redirect to after a user logs in.
+LOGIN_REDIRECT_URL = '/myblog/'
 
 TEMPLATES = [
     {
@@ -104,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'US/Eastern'
 
 TIME_ZONE = 'UTC'
 
@@ -113,8 +121,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Absolute filesystem path to the directory that will hold user uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = '/media/'
+
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

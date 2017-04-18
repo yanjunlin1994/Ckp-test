@@ -1,0 +1,35 @@
+{% extends 'myblog/base.html' %}
+{% load static %}
+{% block title %}Edit my profile{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'myblog/css/edit_my_profile.css' %}" >
+{% endblock %}
+
+{% block content %}
+
+<div class="row total">
+  <div class="col-sm-4">
+  </div>
+
+  <div class="col-sm-5 ">
+    <form enctype="multipart/form-data" action="{% url 'edit_profile'%}" method="post">
+      <table>
+      {% for profilefield in profileform %}
+        {{profilefield.label_tag}}
+        {{profilefield}}
+        {{profilefield.errors}}<br>
+      {% endfor %}
+      </table>
+        <input type="submit" value="Save">
+      {% csrf_token %}
+    </form>
+    {% for error in profileform.non_field_errors %}
+        <p>{{error}}</p>
+    {% endfor %}
+  </div>
+  <div class="col-sm-3">
+
+  </div>
+
+
+{% endblock %}

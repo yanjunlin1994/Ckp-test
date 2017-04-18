@@ -1,0 +1,37 @@
+{% extends 'myblog/base.html' %}
+{% load static %}
+{% block title %}Log in{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'myblog/css/log_in_page.css' %}" >
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-sm-4 ">
+          <div class="log_in_block">
+          <a style="text-decoration:none" href="/myblog/login"><p> myblog </p></a>
+          <form action="{% url 'login'%}" method="post">
+            <span>{{ form.username.label_tag }}</span>
+            <span>{{form.username}}</span>
+            <br>
+            <span>{{ form.password.label_tag }}</span>
+            <span>{{form.password}}</span>
+            <br>
+            <input type="submit" value="Login">
+            <a href="{% url 'register'%}">Register</a>
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% csrf_token %}
+          </form>
+          <br>
+          {% if form.errors %}
+          <p>Incorrect user name and password.</p>
+          {% endif %}
+
+          </div>
+      </div>
+
+      <div class="col-sm-8 ">
+
+      </div>
+    </div>
+{% endblock %}

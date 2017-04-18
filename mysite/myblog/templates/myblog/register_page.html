@@ -1,0 +1,42 @@
+{% extends 'myblog/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'myblog/css/register_page.css' %}" >
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+
+
+      <div class="col-sm-4 ">
+        <div class="register_block">
+        <a style="text-decoration:none" href="/myblog/login"><p> myblog </p></a>
+        <br>
+        <form action="/myblog/register" method="post">
+          {% for registrationfield in registrationform %}
+            {{registrationfield}}
+            <span>{{registrationfield.errors}}</span><br>
+          {% endfor %}
+          <div>
+            <input type="submit" value="Register">
+          </div>
+          {% csrf_token %}
+        </form>
+        <br>
+        <!-- error display -->
+        {% for error in registrationform.non_field_errors %}
+            <p>{{error}}</p>
+        {% endfor %}
+        <!-- error display -->
+
+        </div>
+      </div>
+      <div class="col-sm-8 ">
+      </div>
+    </div>
+
+
+{% endblock %}

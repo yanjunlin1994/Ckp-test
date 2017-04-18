@@ -1,0 +1,46 @@
+{% extends 'myblog/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'myblog/css/home_page.css' %}" >
+{% endblock %}
+
+{% block content %}
+
+    <div class="row total">
+      <div class="col-sm-4">
+          <div class="profile_block">
+            {% if myprofile.picture %}
+              <img class="my_profile_photo" src="{% url 'profile_photo'%}" alt="{{myprofile.id}}">
+            {% endif %}
+
+            <p>User:&nbsp;&nbsp;{{current_user.username}}</p>
+
+
+            {% if not myprofile.first_name == null %}
+              <p>Name:&nbsp;&nbsp;{{myprofile.first_name}}&nbsp;&nbsp;{{myprofile.last_name}}</p>
+              <p>Age:&nbsp;&nbsp;{{myprofile.age}} </p>
+              <p>Bio:&nbsp;&nbsp;{{myprofile.short_bio}}</p>
+            {% endif %}
+            <a href="{% url 'edit_profile' %}"><p>edit my profile</p></a>
+            {% include 'myblog/post_new_message_block.html' %}
+        </div>
+      </div>
+
+      <div class="col-sm-4 ">
+        {% for error_no_found in errors_no_found %}
+            {{error_no_found}}
+        {% endfor %}
+
+        {% for message_seperate in messages %}
+            {% include 'myblog/message_block.html' %}
+        {% endfor %}
+      </div>
+      <div class="col-sm-4 ">
+         <div class="profile_block">
+             <a href="/myblog/logout">Log out</a>
+         </div>
+      </div>
+
+    </div>
+{% endblock %}
