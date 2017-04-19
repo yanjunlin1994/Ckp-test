@@ -8,28 +8,24 @@
 {% block content %}
 
 <div class="row total">
-  <div class="col-sm-4">
+  <div class="col-sm-4 ">
+      <div class="edit_profile_block">
+        <form enctype="multipart/form-data" action="{% url 'edit_profile'%}" method="post">
+          <table>
+          {% for profilefield in profileform %}
+            {{profilefield.label_tag}}
+            {{profilefield}}
+            {{profilefield.errors}}<br>
+          {% endfor %}
+          </table>
+            <input type="submit" value="Save">
+          {% csrf_token %}
+        </form>
+        {% for error in profileform.non_field_errors %}
+            <p>{{error}}</p>
+        {% endfor %}
+    </div>
   </div>
-
-  <div class="col-sm-5 ">
-    <form enctype="multipart/form-data" action="{% url 'edit_profile'%}" method="post">
-      <table>
-      {% for profilefield in profileform %}
-        {{profilefield.label_tag}}
-        {{profilefield}}
-        {{profilefield.errors}}<br>
-      {% endfor %}
-      </table>
-        <input type="submit" value="Save">
-      {% csrf_token %}
-    </form>
-    {% for error in profileform.non_field_errors %}
-        <p>{{error}}</p>
-    {% endfor %}
-  </div>
-  <div class="col-sm-3">
-
-  </div>
-
+</div>
 
 {% endblock %}

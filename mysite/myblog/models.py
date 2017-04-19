@@ -7,7 +7,7 @@ class Profile(models.Model):
     owner = models.OneToOneField(User)
     first_name = models.CharField(max_length=100, default="", blank=True)
     last_name = models.CharField(max_length=100, default="", blank=True)
-    age = models.IntegerField(blank=True, null=True)
+    age = models.IntegerField(blank=True, default=10)
     short_bio = models.CharField(max_length=420, default="", blank=True)
     picture = models.ImageField(upload_to="myblog-user-profile-photos", blank=True)
     def __str__(self):

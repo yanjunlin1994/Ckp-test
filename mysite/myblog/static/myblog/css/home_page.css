@@ -8,7 +8,7 @@
   background-color:rgb(240,240,260);
  }
  .my_profile_photo {
-  width: 60px;
+  width: 130px;
  }
  .message_block_all {
   margin: 50px;
@@ -17,4 +17,9 @@
  }
  .message_block_image {
   width: 300px;
+ }
+ .each_comment_display_block {
+  margin: 10px;
+  padding: 10px;
+  background-color:rgb(230,230,250);
  }

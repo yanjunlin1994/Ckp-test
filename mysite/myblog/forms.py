@@ -2,7 +2,6 @@ from django import forms
 from django.forms import ModelForm, Textarea
 from myblog.models import *
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordResetForm
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length = 50,
                                widget=forms.TextInput(attrs={'placeholder': 'Username'}),)
@@ -16,8 +15,6 @@ class RegistrationForm(forms.Form):
                                 widget = forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),)
 
     def clean(self):
-        # Calls our parent (forms.Form) .clean function, gets a dictionary
-        # of cleaned data as a result
         cleaned_data = super(RegistrationForm, self).clean()
         # Confirms that the two email fields match
         email1 = cleaned_data.get('email1')
