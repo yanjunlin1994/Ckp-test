@@ -12,8 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
-from django.contrib.auth.views import password_reset, password_reset_confirm
-from django.contrib.auth.forms import PasswordResetForm
 #Helper function to guess a MIME type from a file name
 from mimetypes import guess_type
 from django.contrib.auth.tokens import default_token_generator
@@ -21,8 +19,6 @@ from django.contrib.auth.tokens import default_token_generator
 
 from myblog.models import *
 from myblog.forms import *
-
-
 
 @login_required
 def home(request):
@@ -60,7 +56,7 @@ def get_profile_photo(request):
     return HttpResponse(profile_get_photo.picture, content_type=content_type)
 @login_required
 def get_message_photo(request, id):
-    mes = Message.objects.get(id = id)
+    mes = get_object_or_404(Message, id=id)
     if not mes.picture:
         raise Http404
     content_type = guess_type(mes.picture.name)
@@ -73,43 +69,25 @@ def post_new_massage_home(request):
     messageform = MessageForm(request.POST,request.FILES, instance=new_message)
 
     if not messageform.is_valid():
-        context = {'messageform' : messageform,
-                   'messages' : Message.objects.order_by('-pub_date'),
-                   'user_username_left' : request.user,
-                   'user_first_name_left' : request.user.first_name,
-                   'user_last_name_left':  request.user.last_name,
-                   }
-        return render(request,'myblog/home_page.html',context)
+        return redirect(reverse('home'))
     messageform.save()
 
     return redirect(reverse('home'))
 @login_required
 def get_all_comments(request, id):
-    print("start getting comments")
     try:
-        print("start getting messages")
         Messages_to_be_comment = Message.objects.get(id = id)
         # get comments
         comments_to_this_message = Comment.objects.order_by('comment_date').filter(message = Messages_to_be_comment)
-        print("comments is :", comments_to_this_message)
         if (comments_to_this_message[0]):
-
             context = { "comments_to_this_message" : comments_to_this_message}
-
-            print("find comments!")
-            print(context)
-
             return render(request, 'myblog/comments.json', context, content_type="application/json")
     except:
         context = { "comments_to_this_message" : comments_to_this_message}
     context = { "comments_to_this_message" : comments_to_this_message}
-    print("didnt find comments returning...\n")
-    print("context", context)
     return render(request, 'myblog/comments.json', context, content_type="application/json")
 @login_required
 def add_comment(request, id):
-    print("enter add comment in views")
-    # validate this ajax request
     if not 'comment' in request.POST or not request.POST['comment']:
         raise Http404
     else:
@@ -121,7 +99,6 @@ def add_comment(request, id):
     return HttpResponse("")  # Empty response on success.
 @login_required
 def delete_my_message(request, id):
-    print("delete_my_message")
     Messages_to_be_delete = get_object_or_404(Message, id = id)
     Messages_to_be_delete.delete()
     return redirect(reverse('home'))

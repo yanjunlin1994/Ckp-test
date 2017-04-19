@@ -23,7 +23,7 @@ class Message(models.Model):
     pub_date = models.DateTimeField(default=timezone.now())
     picture = models.ImageField(upload_to="myblog-user-message-photos")
     def __str__(self):
-        return self.user + "message"
+        return "message"
 
 class Comment(models.Model):
     message = models.ForeignKey(Message, default="", on_delete=models.CASCADE)
