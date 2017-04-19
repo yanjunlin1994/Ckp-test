@@ -1,8 +1,11 @@
 {% load staticfiles %}
 <div class="message_block_all" >
   <p class="message_id_hidden" hidden="true">{{message_seperate.id}}</p>
+  {% if current_user.username == message_seperate.user.username %}
+    <a href="{% url 'delete_my_message' message_seperate.id %}"><p>delete</p></a>
+  {% endif %}
   <p> {{message_seperate.user}}</p>
   <p>{{message_seperate.pub_date}}</p>
   <img class="message_block_image" src="{% url 'get_message_photo' message_seperate.id%}" alt="{{message_seperate.id}}">
-  <p>comment</p>
+  <p class="message_comment">comment</p>
 </div>

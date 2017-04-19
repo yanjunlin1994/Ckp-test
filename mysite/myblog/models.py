@@ -26,7 +26,7 @@ class Message(models.Model):
         return self.user + "message"
 
 class Comment(models.Model):
-    message = models.ForeignKey(Message, default="")
+    message = models.ForeignKey(Message, default="", on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=32)
     commenter = models.ForeignKey(User)
     comment_date = models.DateTimeField(default=timezone.now())

@@ -83,6 +83,49 @@ def post_new_massage_home(request):
     messageform.save()
 
     return redirect(reverse('home'))
+@login_required
+def get_all_comments(request, id):
+    print("start getting comments")
+    try:
+        print("start getting messages")
+        Messages_to_be_comment = Message.objects.get(id = id)
+        # get comments
+        comments_to_this_message = Comment.objects.order_by('comment_date').filter(message = Messages_to_be_comment)
+        print("comments is :", comments_to_this_message)
+        if (comments_to_this_message[0]):
+
+            context = { "comments_to_this_message" : comments_to_this_message}
+
+            print("find comments!")
+            print(context)
+
+            return render(request, 'myblog/comments.json', context, content_type="application/json")
+    except:
+        context = { "comments_to_this_message" : comments_to_this_message}
+    context = { "comments_to_this_message" : comments_to_this_message}
+    print("didnt find comments returning...\n")
+    print("context", context)
+    return render(request, 'myblog/comments.json', context, content_type="application/json")
+@login_required
+def add_comment(request, id):
+    print("enter add comment in views")
+    # validate this ajax request
+    if not 'comment' in request.POST or not request.POST['comment']:
+        raise Http404
+    else:
+        Messages_to_be_add_comment = get_object_or_404(Message, id = id)
+        new_comment = Comment(message=Messages_to_be_add_comment, comment_text=request.POST['comment'],
+                        commenter=request.user, comment_date=timezone.now())
+        new_comment.save()
+
+    return HttpResponse("")  # Empty response on success.
+@login_required
+def delete_my_message(request, id):
+    print("delete_my_message")
+    Messages_to_be_delete = get_object_or_404(Message, id = id)
+    Messages_to_be_delete.delete()
+    return redirect(reverse('home'))
+
 
 @transaction.atomic
 def register(request):

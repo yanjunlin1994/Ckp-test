@@ -1,0 +1,1 @@
+{"comment_text":"{{ comment_to_this_message.comment_text }}", "commenter":"{{ comment_to_this_message.commenter }}", "commenter_id":"{{ comment_to_this_message.commenter.id }}", "comment_date":"{{ comment_to_this_message.comment_date }}"}

@@ -1,0 +1,1 @@
+{"comments":[{% for comment_to_this_message in comments_to_this_message %}{%spaceless%}{% include 'myblog/comment.json' %}{%endspaceless%}{% if not forloop.last %}, {% endif %}{% endfor %}]}
